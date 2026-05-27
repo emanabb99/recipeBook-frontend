@@ -1,35 +1,23 @@
 import {useState} from "react";
-import {createRecipe} from "../services/recipeService" //this is the service in the backend
-import type { FormEvent }  from "react";
+import {createRecipe} from "../services/recipeService.ts";
 
 export default function CreateRecipeForm() {
+    const[name,setName] = useState("");
+    const[ingredients,setIngredients] = useState("");
+    const[instructions,setInstructions] = useState("");
+    const[success,setSuccess] = useState(false);
 
-    const [name, setName] = useState(""); //empty strings as initial states
-    const [ingredients, setIngredients] = useState("");
-    const [instructions, setInstructions] = useState("");
-
-    const handleSubmit = async (event: FormEvent) => {
-        event.preventDefault() //prevents refresh
-        console.log("SUBMIT FIRED");
-
-        try {
-            await createRecipe({
-                name,
-                ingredients,
-                instructions,
-            }); //this is creating the object Recipe
-
-            setName("");
-            setIngredients("");
-            setInstructions("");
-
-            console.log("Recipe created successfully");
-
-        } catch
-            (error) {
-            console.error("Error creating recipe", error);
-        }
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const recipe = {
+            name,
+            ingredients,
+            instructions
+        };
+        await createRecipe(recipe)
+        setSuccess(true)
     }
+
 
     return (
         <form onSubmit={handleSubmit}>
@@ -39,7 +27,8 @@ export default function CreateRecipeForm() {
                     <textarea
                         rows={1}
                         placeholder="Enter recipe name"
-                        onChange={ (e) => setName(e.target.value)}
+                        value={name}
+                        onChange={(e)=>setName(e.target.value)}
                     />
                     </div>
                 </label>
@@ -50,8 +39,8 @@ export default function CreateRecipeForm() {
                 <textarea
                     rows={4}
                     placeholder="Enter ingredients"
-                    onChange={ (e) => setIngredients(e.target.value)}
-
+                    value={ingredients}
+                    onChange={(e)=>setIngredients(e.target.value)}
                 />
                 </div>
             </label>
@@ -62,14 +51,19 @@ export default function CreateRecipeForm() {
                 <textarea
                     rows={4}
                     placeholder="Enter instructions"
-                    onChange={ (e) => setInstructions(e.target.value)}
+                    value={instructions}
+                    onChange={(e)=>setInstructions(e.target.value)}
                 />
                 </div>
             </label>
             </div>
-            <button type="submit">
+            <button
+                type="submit">
                 Create Recipe!
             </button>
+            <div>
+                <p>{success && 'Recipe created successfully'}</p>
+            </div>
         </form>
     );
 }
