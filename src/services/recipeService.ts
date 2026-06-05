@@ -1,4 +1,4 @@
-export async function createRecipe (recipe: Recipe) {
+export async function createRecipe(recipe: Recipe) {
     const response = await fetch("http://localhost:8080/recipes", {
         method: "POST",
         headers: {
@@ -9,6 +9,18 @@ export async function createRecipe (recipe: Recipe) {
 
     if (!response.ok) {
         throw new Error("Failed to create recipe");
+    }
+
+    return response.json();
+}
+
+export async function viewRecipes() {
+    const response = await fetch("http://localhost:8080/allRecipes", {
+        method: "GET"
+    });
+
+    if (!response.ok) {
+        throw new Error("Failed to get recipes");
     }
 
     return response.json();
