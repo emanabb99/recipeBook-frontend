@@ -15,7 +15,7 @@ export async function createRecipe(recipe: Recipe) {
 }
 
 export async function viewRecipes() {
-    const response = await fetch("http://localhost:8080/allRecipes", {
+    const response = await fetch("http://localhost:8080/recipes", {
         method: "GET"
     });
 

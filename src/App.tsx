@@ -1,6 +1,7 @@
 import CreateRecipeForm from "./components/CreateRecipeForm.tsx";
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import {Link} from "react-router-dom";
+import ViewRecipes from "./components/ViewRecipes.tsx";
 
 
 export default function App() {
@@ -26,7 +27,6 @@ export default function App() {
                         path="/createRecipe"
                         element={
                             <>
-                                <h2>Add your recipe</h2>
                                 <CreateRecipeForm/>
                             </>
                         }
@@ -35,6 +35,7 @@ export default function App() {
                         path="/allRecipes"
                         element={
                         <>
+                            <ViewRecipes/>
                         </>
                         }
                     />
