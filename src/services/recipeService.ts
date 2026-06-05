@@ -19,7 +19,7 @@ export async function viewRecipes() {
         method: "GET"
     });
 
-    if (!response.ok) {
+    if(!response.ok) {
         throw new Error("Failed to get recipes");
     }
 
