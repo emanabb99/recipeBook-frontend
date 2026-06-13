@@ -18,9 +18,16 @@ export default function CreateRecipeForm({editingRecipe,clearEdit}:EditRecipePro
     const successMessage = isEditting ? "Recipe edited successfully!" : "Recipe created successfully!";
 
     useEffect(() => {
+        if (isEditting) {
             setName(editingRecipe.name)
             setIngredients(editingRecipe.ingredients)
             setInstructions(editingRecipe.instructions)
+        }
+        else {
+            setName("")
+            setIngredients("")
+            setInstructions("")
+        }
     }, [editingRecipe]);
 
 
