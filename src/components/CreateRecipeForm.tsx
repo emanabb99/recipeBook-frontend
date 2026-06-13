@@ -1,11 +1,28 @@
-import {useState} from "react";
-import {createRecipe} from "../services/recipeService.ts";
+import {useEffect, useState} from "react";
+import {createRecipe, editRecipe} from "../services/recipeService.ts";
+import type {Recipe} from "../types/Recipe.ts";
 
-export default function CreateRecipeForm() {
+interface EditRecipeProps {
+    editingRecipe : Recipe
+    clearEdit : ()=>void
+}
+
+export default function CreateRecipeForm({editingRecipe,clearEdit}:EditRecipeProps) {
     const [name, setName] = useState("");
     const [ingredients, setIngredients] = useState("");
     const [instructions, setInstructions] = useState("");
     const [success, setSuccess] = useState(false);
+    const isEditting = editingRecipe!=null;
+    const formTitle = isEditting ? "Edit your recipe" : "Add your recipe";
+    const formSubmit = isEditting ? "Save Recipe!" : "Create Recipe!";
+    const successMessage = isEditting ? "Recipe edited successfully!" : "Recipe created successfully!";
+
+    useEffect(() => {
+            setName(editingRecipe.name)
+            setIngredients(editingRecipe.ingredients)
+            setInstructions(editingRecipe.instructions)
+    }, [editingRecipe]);
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -14,14 +31,28 @@ export default function CreateRecipeForm() {
             ingredients,
             instructions
         };
-        await createRecipe(recipe)
+        if (isEditting) {
+            const updatedRecipe = {
+                id : editingRecipe.id,
+                ...recipe
+            }
+            await editRecipe(updatedRecipe)
+        }
+        else {
+            const recipe = {
+                name,
+                ingredients,
+                instructions
+            }
+            await createRecipe(recipe);
+            }
         setSuccess(true)
     }
 
 
     return (
         <>
-            <h2>Add your recipe</h2>
+            <h2>{formTitle}</h2>
             <form onSubmit={handleSubmit}>
                 <div>
                     <label>Recipe name:
@@ -61,10 +92,16 @@ export default function CreateRecipeForm() {
                 </div>
                 <button
                     type="submit">
-                    Create Recipe!
+                    {formSubmit}
                 </button>
+                {isEditting && (
+                    <button
+                        type="button"
+                        onClick={clearEdit}
+                    >Cancel</button>
+                )}
                 <div>
-                    <p>{success && 'Recipe created successfully'}</p>
+                    <p>{success && successMessage}</p>
                 </div>
             </form>
         </>

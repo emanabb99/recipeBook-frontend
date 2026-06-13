@@ -30,7 +30,7 @@ export async function editRecipe(recipe: Recipe) {
 }
 
 export async function deleteRecipe(id : number) {
-    const response = await fetch(`http://localhost:8080/${id}`, {
+    const response = await fetch(`http://localhost:8080/recipes/${id}`, {
         method: "DELETE"
     })
     if (!response.ok) {
