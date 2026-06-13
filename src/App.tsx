@@ -5,6 +5,8 @@ import {useState} from "react";
 import Login from "./components/Login.tsx";
 import type {User} from "./types/User.ts";
 import HomePage from "./components/HomePage.tsx";
+import CreateRecipeForm from "./components/CreateRecipeForm.tsx";
+import ViewRecipes from "./components/ViewRecipes.tsx";
 
 export default function App() {
     const [userLoggedIn, setUserLoggedIn] = useState<User | null>(null);
@@ -54,6 +56,13 @@ export default function App() {
                             )
                         }>
                     </Route>
+                    <Route
+                    path={"/createRecipe"}
+                    element={ userLoggedIn ? <CreateRecipeForm editingRecipe={null}/> : <Navigate to="/login"/>}>
+                    </Route>
+                    <Route
+                    path={"/viewRecipes"}
+                    element={ userLoggedIn ? <ViewRecipes/> : <Navigate to="/logIn"/>}></Route>
                 </Routes>
             </>
         </BrowserRouter>

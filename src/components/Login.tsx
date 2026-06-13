@@ -1,7 +1,7 @@
 import {useState} from "react";
 import {getUser} from "../services/userService.ts";
 import HomePage from "./HomePage.tsx";
-import {useNavigate} from "react-router-dom";
+import {useNavigate,Link} from "react-router-dom";
 import type {User} from "../types/User.ts";
 
 interface SuccessProp {
@@ -37,11 +37,6 @@ export default function Login({onLoginSuccess}: SuccessProp) {
                 <input value={password} onChange={(e) => setPassword(e.target.value)}
                        placeholder="Enter password"/>
                 <button>Log in</button>
-                {success && (
-                    <>
-                        <HomePage/>
-                    </>
-                )}
             </form>
         </>
     )
