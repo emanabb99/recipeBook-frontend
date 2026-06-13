@@ -2,6 +2,7 @@ import CreateRecipeForm from "./components/CreateRecipeForm.tsx";
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import {Link} from "react-router-dom";
 import ViewRecipes from "./components/ViewRecipes.tsx";
+import CreateUserForm from "./components/CreateUserForm.tsx";
 
 
 export default function App() {
@@ -12,15 +13,18 @@ export default function App() {
                     <Route
                         path={"/"}
                         element={
-                        <>
-                            <h1>Recipe Book</h1>
-                            <Link to="/createRecipe">
-                                <button>Go to create recipe</button>
-                            </Link>
-                            <Link to="/allRecipes">
-                                <button>View all recipes</button>
-                            </Link>
-                        </>
+                            <>
+                                <h1>Recipe Book</h1>
+                                <Link to="/createRecipe">
+                                    <button>Go to create recipe</button>
+                                </Link>
+                                <Link to="/allRecipes">
+                                    <button>View all recipes</button>
+                                </Link>
+                                <Link to="/createUser">
+                                    <button>Create a user</button>
+                                </Link>
+                            </>
                         }
                     />
                     <Route
@@ -30,13 +34,21 @@ export default function App() {
                                 <CreateRecipeForm/>
                             </>
                         }
-                        />
+                    />
                     <Route
                         path="/allRecipes"
                         element={
-                        <>
-                            <ViewRecipes/>
-                        </>
+                            <>
+                                <ViewRecipes/>
+                            </>
+                        }
+                    />
+                    <Route
+                        path="/createUser"
+                        element={
+                            <>
+                                <CreateUserForm/>
+                            </>
                         }
                     />
                 </Routes>
