@@ -1,10 +1,10 @@
-export async function createRecipe(recipe: Recipe) {
+export async function createRecipe(recipe: Recipe, userId : number) {
     const response = await fetch("http://localhost:8080/recipes", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify(recipe),
+        body: JSON.stringify({...recipe,userId}),
     });
 
     if (!response.ok) {

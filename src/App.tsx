@@ -58,7 +58,10 @@ export default function App() {
                     </Route>
                     <Route
                     path={"/createRecipe"}
-                    element={ userLoggedIn ? <CreateRecipeForm editingRecipe={null}/> : <Navigate to="/login"/>}>
+                    element={ userLoggedIn ? <CreateRecipeForm
+                        editingRecipe={null}
+                        currentUser={userLoggedIn}
+                    /> : <Navigate to="/login"/>}>
                     </Route>
                     <Route
                     path={"/viewRecipes"}

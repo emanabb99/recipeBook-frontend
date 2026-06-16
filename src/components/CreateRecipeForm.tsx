@@ -1,13 +1,15 @@
 import {useEffect, useState} from "react";
 import {createRecipe, editRecipe} from "../services/recipeService.ts";
 import type {Recipe} from "../types/Recipe.ts";
+import type {User} from "../types/User.ts"
 
-interface EditRecipeProps {
-    editingRecipe : Recipe
+interface CreateRecipeProps {
+    editingRecipe : Recipe | null
     clearEdit : ()=>void
+    currentUser: User
 }
 
-export default function CreateRecipeForm({editingRecipe,clearEdit}:EditRecipeProps) {
+export default function CreateRecipeForm({editingRecipe,clearEdit,currentUser}:CreateRecipeProps) {
     const [name, setName] = useState("");
     const [ingredients, setIngredients] = useState("");
     const [instructions, setInstructions] = useState("");
@@ -51,7 +53,8 @@ export default function CreateRecipeForm({editingRecipe,clearEdit}:EditRecipePro
                 ingredients,
                 instructions
             }
-            await createRecipe(recipe);
+            if (!currentUser?.id) return;
+            await createRecipe(recipe,currentUser.id);
             }
         setSuccess(true)
     }
