@@ -65,7 +65,9 @@ export default function App() {
                     </Route>
                     <Route
                     path={"/viewRecipes"}
-                    element={ userLoggedIn ? <ViewRecipes/> : <Navigate to="/logIn"/>}></Route>
+                    element={ userLoggedIn ? <ViewRecipes
+                        currentUser={userLoggedIn}
+                    /> : <Navigate to="/logIn"/>}></Route>
                 </Routes>
             </>
         </BrowserRouter>

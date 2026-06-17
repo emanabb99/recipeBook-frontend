@@ -40,8 +40,8 @@ export async function deleteRecipe(id : number) {
     return id;
 }
 
-export async function viewRecipes() {
-    const response = await fetch("http://localhost:8080/recipes", {
+export async function viewRecipes(userId : number) {
+    const response = await fetch(`http://localhost:8080/recipes/${userId}`, {
         method: "GET"
     });
 

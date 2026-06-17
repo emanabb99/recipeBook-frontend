@@ -2,15 +2,22 @@ import {useEffect, useState} from "react";
 import type {Recipe} from "../types/Recipe.ts";
 import {deleteRecipe, viewRecipes} from "../services/recipeService.ts";
 import CreateRecipeForm from "./CreateRecipeForm.tsx";
+import type {User} from "../types/User.ts";
 
-export default function ViewRecipes() {
+interface ViewRecipeProps {
+    currentUser: User | null
+}
+
+export default function ViewRecipes({currentUser}:ViewRecipeProps) {
     const [recipes, setRecipes] = useState<Recipe[]>([]);
     const [recipeToEdit, setRecipeToEdit] = useState<Recipe | null>(null);
 
     useEffect(() => {
         const data = async () => {
-            const response = await viewRecipes();
-            setRecipes(response)
+            if (currentUser?.id) {
+                const response = await viewRecipes(currentUser.id);
+                setRecipes(response)
+            }
         }
         data();
     }, []);
