@@ -20,7 +20,7 @@ export default function ViewRecipes({currentUser}:ViewRecipeProps) {
             }
         }
         data();
-    }, []);
+    }, [currentUser]);
 
     const handleDelete = async (id: number)=> {
         await deleteRecipe(id);
@@ -32,9 +32,13 @@ export default function ViewRecipes({currentUser}:ViewRecipeProps) {
             <h1>All recipes</h1>
             {recipes.map((recipe) => (
                 <div key={recipe.id}>
-                    <li>{recipe.name}</li>
-                    <p>{recipe.ingredients}</p>
-                    <p>{recipe.instructions}</p>
+                    <p>{recipe.name}</p>
+                    {recipe.ingredients.map((ingredient)=>(
+                        <li>{ingredient}</li>
+                    ))}
+                    {recipe.instructions.map((instruction)=>(
+                        <p>{instruction}</p>
+                    ))}
                     <div>
                         <button onClick={()=> setRecipeToEdit(recipe)}>Edit</button>
                         <button onClick={()=>handleDelete(recipe.id)}>Delete</button>
