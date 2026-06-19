@@ -15,6 +15,9 @@ export default function HomePage ({currentUser}:userProps) {
             <Link to="/viewRecipes">
                 <button>View recipes</button>
             </Link>
+            <Link to="/askAI">
+                <button>Ask AI to create a recipe🤖</button>
+            </Link>
         </>
     )
 }

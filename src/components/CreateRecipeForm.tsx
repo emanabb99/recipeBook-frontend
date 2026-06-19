@@ -4,17 +4,19 @@ import type {Recipe} from "../types/Recipe.ts";
 import type {User} from "../types/User.ts"
 
 interface CreateRecipeProps {
-    editingRecipe : Recipe | null
-    clearEdit : ()=>void
+    editingRecipe: Recipe | null
+    clearEdit: () => void
     currentUser: User
 }
 
-export default function CreateRecipeForm({editingRecipe,clearEdit,currentUser}:CreateRecipeProps) {
+export default function CreateRecipeForm({editingRecipe, clearEdit, currentUser}: CreateRecipeProps) {
     const [name, setName] = useState("");
-    const [ingredients, setIngredients] = useState("");
-    const [instructions, setInstructions] = useState("");
+    const [ingredients, setIngredients] = useState<string[]>([]);
+    const [ingredientsInput,setIngredientsInput] = useState("");
+    const [instructions, setInstructions] = useState<string[]>([]);
+    const [instructionsInput,setInstructionsInput] = useState("");
     const [success, setSuccess] = useState(false);
-    const isEditting = editingRecipe!=null;
+    const isEditting = editingRecipe != null;
     const formTitle = isEditting ? "Edit your recipe" : "Add your recipe";
     const formSubmit = isEditting ? "Save Recipe!" : "Create Recipe!";
     const successMessage = isEditting ? "Recipe edited successfully!" : "Recipe created successfully!";
@@ -24,11 +26,10 @@ export default function CreateRecipeForm({editingRecipe,clearEdit,currentUser}:C
             setName(editingRecipe.name)
             setIngredients(editingRecipe.ingredients)
             setInstructions(editingRecipe.instructions)
-        }
-        else {
+        } else {
             setName("")
-            setIngredients("")
-            setInstructions("")
+            setIngredients([])
+            setInstructions([])
         }
     }, [editingRecipe]);
 
@@ -42,20 +43,19 @@ export default function CreateRecipeForm({editingRecipe,clearEdit,currentUser}:C
         };
         if (isEditting) {
             const updatedRecipe = {
-                id : editingRecipe.id,
+                id: editingRecipe.id,
                 ...recipe
             }
             await editRecipe(updatedRecipe)
-        }
-        else {
+        } else {
             const recipe = {
                 name,
                 ingredients,
                 instructions
             }
             if (!currentUser?.id) return;
-            await createRecipe(recipe,currentUser.id);
-            }
+            await createRecipe(recipe, currentUser.id);
+        }
         setSuccess(true)
     }
 
@@ -79,24 +79,46 @@ export default function CreateRecipeForm({editingRecipe,clearEdit,currentUser}:C
                 <div>
                     <label>Ingredients:
                         <div>
-                <textarea
-                    rows={4}
-                    placeholder="Enter ingredients"
-                    value={ingredients}
-                    onChange={(e) => setIngredients(e.target.value)}
-                />
+                            <input value={ingredientsInput}
+                                   placeholder="Add ingredient"
+                                   onChange={(e)=>setIngredientsInput(e.target.value)}
+                            />
+                            <button
+                                type="button"
+                                onClick={()=>{
+                                    setIngredients([...ingredients,ingredientsInput])
+                                    setIngredientsInput("")
+                                }}
+                            >Add</button>
+                            {ingredients.map((ingredient)=>(
+                                <>
+                                <li>{ingredient}</li>
+                                </>
+                            ))
+                            }
                         </div>
                     </label>
                 </div>
                 <div>
                     <label>Instructions:
                         <div>
-                <textarea
-                    rows={4}
-                    placeholder="Enter instructions"
-                    value={instructions}
-                    onChange={(e) => setInstructions(e.target.value)}
-                />
+                            <input
+                                placeholder="Enter instructions"
+                                value={instructionsInput}
+                                onChange={(e)=>setInstructionsInput(e.target.value)}
+                            />
+                            <button
+                                type="button"
+                                onClick={()=>{
+                                    setInstructions([...instructions,instructionsInput])
+                                    setInstructionsInput("")
+                                }}
+                            >Add</button>
+                            {instructions.map((instruction)=>(
+                                <>
+                                    <li>{instruction}</li>
+                                </>
+                            ))}
                         </div>
                     </label>
                 </div>
