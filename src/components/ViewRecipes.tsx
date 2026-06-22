@@ -29,10 +29,11 @@ export default function ViewRecipes({currentUser}:ViewRecipeProps) {
 
     return (
         <>
+            <div className="recipes-container">
             <h1>All recipes</h1>
             {recipes.map((recipe) => (
-                <div key={recipe.id}>
-                    <p>{recipe.name}</p>
+                <div className="recipe-card" key={recipe.id}>
+                    <h3>{recipe.name}</h3>
                     {recipe.ingredients.map((ingredient)=>(
                         <li>{ingredient}</li>
                     ))}
@@ -54,6 +55,7 @@ export default function ViewRecipes({currentUser}:ViewRecipeProps) {
                 </div>
             ))
             }
+            </div>
         </>
     )
 }

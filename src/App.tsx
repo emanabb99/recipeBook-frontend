@@ -8,6 +8,7 @@ import HomePage from "./components/HomePage.tsx";
 import CreateRecipeForm from "./components/CreateRecipeForm.tsx";
 import ViewRecipes from "./components/ViewRecipes.tsx";
 import AIrecipe from "./components/AIrecipe.tsx";
+import './App.css';
 
 export default function App() {
     const [userLoggedIn, setUserLoggedIn] = useState<User | null>(null);

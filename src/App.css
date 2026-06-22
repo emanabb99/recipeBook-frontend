@@ -17,6 +17,67 @@
   }
 }
 
+.recipe-card {
+  background-color: #fef4ff;
+  padding: 16px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+.recipes-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+
+.form-card {
+  background: white;
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.form-card input,
+.form-card textarea {
+  background-color: #f7f7f7;
+  padding: 14px;
+  margin: 10px auto;
+  font-size: 16px;
+  outline: none;
+  border: 1px solid #ccc;
+  color: #2d1d30;
+
+}
+
+.form-card textarea{
+  height: 80px;
+  resize: vertical;
+}
+
+.form-card button[type="submit"] {
+  background-color: #423159;
+  color: white;
+  font-weight: bold;
+  border-radius: 8px;
+}
+
+
+.inline-input {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.inline-input input,
+.inline-input textarea {
+  flex: 1;
+}
+
+
 .hero {
   position: relative;
 
