@@ -6,5 +6,5 @@ export async function sendPrompt(prompt: string) {
         },
         body: JSON.stringify({prompt:prompt})
     })
-    return response.text();
+    return response.json();
 }

@@ -1,14 +1,14 @@
 import {useState} from "react";
 import {sendPrompt} from "../services/aiService.ts";
+import type {Recipe} from "../types/Recipe.ts";
 
 export default function AIrecipe() {
-    const [generatedRecipe,setGeneratedRecipe] = useState<String | null>(null);
+    const [generatedRecipe,setGeneratedRecipe] = useState<Recipe | null>(null);
     const [prompt,setPrompt] = useState("");
 
     const handlePrompt = async (e) => {
         e.preventDefault();
         const data = await sendPrompt(prompt)
-        console.log(data);
         setGeneratedRecipe(data);
     }
 
@@ -27,7 +27,13 @@ export default function AIrecipe() {
             </div>
             {generatedRecipe && (
                 <>
-                    <p>{generatedRecipe}</p>
+                    <p>{generatedRecipe.name}</p>
+                    {generatedRecipe.ingredients.map((ingredient)=>(
+                        <li>{ingredient}</li>
+                    ))}
+                    {generatedRecipe.instructions.map((instruction)=>(
+                        <p>{instruction}</p>
+                    ))}
                 </>
             )}
         </>
