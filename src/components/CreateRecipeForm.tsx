@@ -12,9 +12,9 @@ interface CreateRecipeProps {
 export default function CreateRecipeForm({editingRecipe, clearEdit, currentUser}: CreateRecipeProps) {
     const [name, setName] = useState("");
     const [ingredients, setIngredients] = useState<string[]>([]);
-    const [ingredientsInput,setIngredientsInput] = useState("");
+    const [ingredientsInput, setIngredientsInput] = useState("");
     const [instructions, setInstructions] = useState<string[]>([]);
-    const [instructionsInput,setInstructionsInput] = useState("");
+    const [instructionsInput, setInstructionsInput] = useState("");
     const [success, setSuccess] = useState(false);
     const isEditting = editingRecipe != null;
     const formTitle = isEditting ? "Edit your recipe" : "Add your recipe";
@@ -59,6 +59,14 @@ export default function CreateRecipeForm({editingRecipe, clearEdit, currentUser}
         setSuccess(true)
     }
 
+    const handleIngredientDelete = (ingredient: string) => {
+        setIngredients(ingredients.filter(ingr => ingr!==ingredient));
+    }
+
+    const handleInstructionDelete = (instruction: string) => {
+        setInstructions(instructions.filter(inst => inst!==instruction));
+    }
+
 
     return (
         <>
@@ -81,18 +89,22 @@ export default function CreateRecipeForm({editingRecipe, clearEdit, currentUser}
                         <div>
                             <input value={ingredientsInput}
                                    placeholder="Add ingredient"
-                                   onChange={(e)=>setIngredientsInput(e.target.value)}
+                                   onChange={(e) => setIngredientsInput(e.target.value)}
                             />
                             <button
                                 type="button"
-                                onClick={()=>{
-                                    setIngredients([...ingredients,ingredientsInput])
+                                onClick={() => {
+                                    setIngredients([...ingredients, ingredientsInput])
                                     setIngredientsInput("")
                                 }}
-                            >Add</button>
-                            {ingredients.map((ingredient)=>(
+                            >Add
+                            </button>
+                            {ingredients.map((ingredient) => (
                                 <>
-                                <li>{ingredient}</li>
+                                    <div>
+                                        <li>{ingredient}</li>
+                                        <button type="button" onClick={()=>{handleIngredientDelete(ingredient)}}>Delete</button>
+                                    </div>
                                 </>
                             ))
                             }
@@ -102,21 +114,23 @@ export default function CreateRecipeForm({editingRecipe, clearEdit, currentUser}
                 <div>
                     <label>Instructions:
                         <div>
-                            <input
-                                placeholder="Enter instructions"
+                            <textarea
+                                placeholder="Enter instructions one at a time"
                                 value={instructionsInput}
-                                onChange={(e)=>setInstructionsInput(e.target.value)}
+                                onChange={(e) => setInstructionsInput(e.target.value)}
                             />
                             <button
                                 type="button"
-                                onClick={()=>{
-                                    setInstructions([...instructions,instructionsInput])
+                                onClick={() => {
+                                    setInstructions([...instructions, instructionsInput])
                                     setInstructionsInput("")
                                 }}
-                            >Add</button>
-                            {instructions.map((instruction)=>(
+                            >Add
+                            </button>
+                            {instructions.map((instruction) => (
                                 <>
-                                    <li>{instruction}</li>
+                                    <li type="1">{instruction}</li>
+                                    <button type="button" onClick={()=>{handleInstructionDelete(instruction)}}>Delete</button>
                                 </>
                             ))}
                         </div>
